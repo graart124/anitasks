@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AniTasks"
+rootProject.name = "anitasks"
 include(":app")
