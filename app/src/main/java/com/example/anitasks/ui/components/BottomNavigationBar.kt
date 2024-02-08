@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.example.anitasks.R
 import com.example.anitasks.screens.NavGraphs
 import com.example.anitasks.screens.appCurrentDestinationAsState
+import com.example.anitasks.screens.destinations.AddLessonScreenDestination
 import com.example.anitasks.screens.destinations.Destination
 import com.example.anitasks.screens.destinations.ProfileScreenDestination
 import com.example.anitasks.screens.destinations.ScheduleScreenDestination
@@ -68,15 +69,6 @@ fun BottomNavigationBar(
                         }
                     }
                 )
-                if (bottomNavItem !is BottomNavigationItem.Profile) {
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(1.dp)
-                            .padding(vertical = 12.dp)
-                            .background(Color(0xFFC4C4C4))
-                    )
-                }
             }
         }
     }
@@ -125,7 +117,7 @@ sealed class BottomNavigationItem(val destination: Destination, val icon: Int, v
         BottomNavigationItem(ScheduleScreenDestination, R.drawable.ic_bottom_calendar, "Розклад")
 
     data object AddLesson :
-        BottomNavigationItem(ScheduleScreenDestination, R.drawable.ic_bottom_add_lesson, "Нове заняття")
+        BottomNavigationItem(AddLessonScreenDestination, R.drawable.ic_bottom_add_lesson, "Нове заняття")
 
     data object Profile :
         BottomNavigationItem(ProfileScreenDestination, R.drawable.ic_bottom_profile, "Профіль")

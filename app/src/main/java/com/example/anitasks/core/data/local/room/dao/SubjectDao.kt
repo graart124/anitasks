@@ -13,7 +13,7 @@ interface SubjectDao {
     @Query("SELECT * FROM subjects")
     suspend fun getAllSubjects(): List<Subject>
 
-    @Query("SELECT * FROM subjects WHERE id = :subjectId")
+    @Query("SELECT * FROM subjects WHERE subject_id = :subjectId")
     suspend fun getSubjectById(subjectId: Long): Subject?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

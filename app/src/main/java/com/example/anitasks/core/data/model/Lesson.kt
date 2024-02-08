@@ -16,18 +16,29 @@ import androidx.room.PrimaryKey
     )]
 )
 data class Lesson(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "day_of_week") val dayOfWeek: DayOfWeek,
-    val week: Int,
-    @ColumnInfo(name = "lesson_type") val lessonType: LessonType,
-    @ColumnInfo(name = "start_time") val startTime: String, // "HH:mm"
-    val location: String?,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @ColumnInfo(name = "day_of_week") var dayOfWeek: DayOfWeek,
+    var week: Int,
+    @ColumnInfo(name = "lesson_type") var lessonType: LessonType,
+    @ColumnInfo(name = "start_time") var startTime: String, // "HH:mm"
+    var location: String?,
     @ColumnInfo(
         name = "subject_id",
         index = true
-    ) val subjectId: Int,
-    @Ignore val subject: Subject? = null
-)
+    ) var subjectId: Int,
+    @Ignore var subject: Subject? = null
+){
+    constructor() : this(
+        id = 0,
+        dayOfWeek = DayOfWeek.MONDAY,
+        week = 1,
+        lessonType = LessonType.LECTURE,
+        startTime = "00:00",
+        location = null,
+        subjectId = 0,
+        subject = null
+    )
+}
 
 enum class DayOfWeek {
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
