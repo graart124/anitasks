@@ -14,10 +14,11 @@ sealed class AppTextStyle(fontFamily: FontFamily, weight: FontWeight) {
     val sp18 get() = style.copy(fontSize = 18.sp)
     val sp20 get() = style.copy(fontSize = 20.sp)
     val sp22 get() = style.copy(fontSize = 22.sp)
+    val sp32 get() = style.copy(fontSize = 32.sp)
     val sp36 get() = style.copy(fontSize = 36.sp)
 
-    object RobotoRegular : AppTextStyle(Roboto, FontWeight.Normal)
-    object RobotoMedium : AppTextStyle(Roboto, FontWeight.Medium)
-    object RobotoLight : AppTextStyle(Roboto, FontWeight.Light)
-    object RobotoBold : AppTextStyle(Roboto, FontWeight.Bold)
+    data object RobotoRegular : AppTextStyle(Roboto, FontWeight.Normal)
+    data object RobotoMedium : AppTextStyle(Roboto, FontWeight.Medium)
+    data object RobotoLight : AppTextStyle(Roboto, FontWeight.Light)
+    data object RobotoBold : AppTextStyle(Roboto, FontWeight.Bold)
 }

@@ -18,6 +18,8 @@ val SelectedNavBarItem=Color(0xFF80B3FF)
 val UnselectedNavBarItem=Color(0xFFEBEBF5).copy(alpha = 0.7f)
 val Background = Color(0xFF21283F)
 val PurpleLight = Color(0xFFA85CE3)
+val PurpleDark = Color(0xFF404471)
+
 val Orange = Color(0xFFFA7942)
 val DarkGray = Color(0xFF494442)
 val MediumGray = Color(0xFF9E9E9E)

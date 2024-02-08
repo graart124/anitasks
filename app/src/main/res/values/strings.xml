@@ -3,4 +3,5 @@
     <string name="sing_in_with_google">Авторизуватися через Google</string>
     <string name="welcome_anita">Вас вітає Anita!</string>
     <string name="log_in_info">Вам необхідно авторизуватися для подальшого користування застосунком. Скористайтеся для цього своїм обліковим записом Google</string>
+    <string name="profile">Profile</string>
 </resources>
