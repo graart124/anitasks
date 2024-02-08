@@ -1,6 +1,5 @@
 package com.example.anitasks.screens.login
 
-import android.widget.Space
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -16,13 +15,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +39,8 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.anitasks.R
+import com.example.anitasks.screens.destinations.ScheduleScreenDestination
+import com.example.anitasks.screens.destinations.SplashScreenDestination
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.Background
 import com.example.anitasks.ui.theme.Primary
@@ -52,6 +58,9 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
 
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -60,10 +69,24 @@ fun LoginScreen(
             viewModel.processGoogleSignInResult(intent)
         }
     }
+    val loginResult by viewModel.loginResult.collectAsState()
 
+    LaunchedEffect(loginResult) {
+        loginResult?.let { success ->
+            if (success) {
+                navigator.popBackStack()
+                navigator.navigate(ScheduleScreenDestination)
+            } else {
+                snackbarHostState.showSnackbar("Помилка входу\nБудь ласка, спробуйте знову")
+            }
+        }
+    }
 
     Scaffold(
-        containerColor = Background
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        containerColor = Background,
     ) {
         Column(
             modifier = Modifier
@@ -82,7 +105,10 @@ fun LoginScreen(
             ) {
                 Box(
                     modifier = Modifier
-                        .background(color = PurpleLight.copy(alpha = 0.7f), shape = RoundedCornerShape(7.dp))
+                        .background(
+                            color = PurpleLight.copy(alpha = 0.7f),
+                            shape = RoundedCornerShape(7.dp)
+                        )
                         .padding(8.dp),
                     contentAlignment = Alignment.Center
                 ) {

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.anitasks.screens.NavGraphs
+import com.example.anitasks.ui.components.BottomNavigationBar
 import com.example.anitasks.ui.theme.AniTasksTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 Scaffold(
-
+                    bottomBar = { BottomNavigationBar(navController = navController) }
                 ) {
                     Box(
                         modifier = Modifier

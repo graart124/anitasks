@@ -13,6 +13,9 @@ val Pink40 = Color(0xFF7D5260)
 
 
 val Primary =Color(0xFF9F1DBF)
+val NavBarColor=Color(0xFF804CB2)
+val SelectedNavBarItem=Color(0xFF80B3FF)
+val UnselectedNavBarItem=Color(0xFFEBEBF5).copy(alpha = 0.7f)
 val Background = Color(0xFF21283F)
 val PurpleLight = Color(0xFFA85CE3)
 val Orange = Color(0xFFFA7942)

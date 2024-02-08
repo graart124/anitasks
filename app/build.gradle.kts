@@ -1,12 +1,11 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-//    kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
-//    id("com.google.gms.google-services")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -24,6 +23,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
         }
     }
 
@@ -67,6 +74,8 @@ android {
 }
 
 val composeVersion = "1.6.0"
+val roomVersion = "2.6.1"
+
 dependencies {
     // Core
     implementation("androidx.core:core-ktx:1.12.0")
@@ -75,7 +84,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("androidx.multidex:multidex:2.0.1")
-    
+    implementation("androidx.core:core-ktx:+")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+
     // Compose
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
@@ -94,17 +106,16 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0")
 
-//    // Dagger - Hilt
+    // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
-//    //Room
-//    implementation("androidx.room:room-runtime:2.5.0")
-//    kapt("androidx.room:room-compiler:2.5.0")
-//    implementation("androidx.room:room-ktx:2.5.0")
-
-
+    //Room
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     //Navigation
     implementation("io.github.raamcosta.compose-destinations:core:1.10.0")

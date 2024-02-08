@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.sp
 sealed class AppTextStyle(fontFamily: FontFamily, weight: FontWeight) {
     private val style = TextStyle(fontFamily = fontFamily, fontWeight = weight)
 
+    val sp12 get() = style.copy(fontSize = 12.sp)
     val sp14 get() = style.copy(fontSize = 14.sp)
     val sp16 get() = style.copy(fontSize = 16.sp)
     val sp18 get() = style.copy(fontSize = 18.sp)

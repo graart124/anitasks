@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Text
@@ -21,12 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.anitasks.R
 import com.example.anitasks.screens.destinations.LoginScreenDestination
+import com.example.anitasks.screens.destinations.ScheduleScreenDestination
 import com.example.anitasks.screens.destinations.SplashScreenDestination
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.Background
@@ -43,12 +41,18 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     navigator: DestinationsNavigator,
+    viewModel:SplashScreenViewModel = hiltViewModel()
 ) {
+    val isUserAuthorized = viewModel.isUserAuthorized
 
     LaunchedEffect(Unit) {
-        delay(1000L)
+        delay(1500L)
         navigator.popBackStack(SplashScreenDestination.route, true, saveState = true)
-        navigator.navigate(LoginScreenDestination())
+        if (!isUserAuthorized.value) {
+            navigator.navigate(LoginScreenDestination())
+        } else{
+            navigator.navigate(ScheduleScreenDestination())
+        }
     }
 
 
