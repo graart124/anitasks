@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -34,7 +33,6 @@ import com.example.anitasks.ui.components.TopAppBar
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.Background
 import com.example.anitasks.ui.theme.NavBarColor
-import com.example.anitasks.ui.theme.Primary
 import com.example.anitasks.ui.theme.PurpleDark
 import com.ramcosta.composedestinations.annotation.Destination
 
@@ -46,7 +44,8 @@ fun ProfileScreen(
     val state = viewModel.uiState.collectAsState().value
     val placeholderImage = painterResource(id = R.drawable.anita_welcome)
     Scaffold(
-        topBar = { TopAppBar(label = stringResource(R.string.profile)) }
+        topBar = { TopAppBar(label = stringResource(R.string.profile)) },
+        containerColor = Background
     ) {
         Column(
             modifier = Modifier.padding(

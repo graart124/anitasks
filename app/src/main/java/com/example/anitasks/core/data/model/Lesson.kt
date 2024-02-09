@@ -1,10 +1,12 @@
 package com.example.anitasks.core.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(
     tableName = "lessons",
@@ -15,6 +17,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE
     )]
 )
+@Parcelize
 data class Lesson(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     @ColumnInfo(name = "day_of_week") var dayOfWeek: DayOfWeek,
@@ -27,7 +30,7 @@ data class Lesson(
         index = true
     ) var subjectId: Int,
     @Ignore var subject: Subject? = null
-){
+) : Parcelable {
     constructor() : this(
         id = 0,
         dayOfWeek = DayOfWeek.MONDAY,
@@ -40,10 +43,17 @@ data class Lesson(
     )
 }
 
-enum class DayOfWeek {
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+enum class DayOfWeek(val displayName: String) {
+    MONDAY("Понеділок"),
+    TUESDAY("Вівторок"),
+    WEDNESDAY("Середа"),
+    THURSDAY("Четвер"),
+    FRIDAY("П'ятниця"),
+    SATURDAY("Субота")
 }
 
-enum class LessonType {
-    LECTURE, SEMINAR, PRACTICAL
+enum class LessonType(val displayName: String) {
+    LECTURE("Лекція"),
+    SEMINAR("Семінар"),
+    PRACTICAL("Практичне")
 }

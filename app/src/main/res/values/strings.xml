@@ -3,5 +3,17 @@
     <string name="sing_in_with_google">Авторизуватися через Google</string>
     <string name="welcome_anita">Вас вітає Anita!</string>
     <string name="log_in_info">Вам необхідно авторизуватися для подальшого користування застосунком. Скористайтеся для цього своїм обліковим записом Google</string>
-    <string name="profile">Profile</string>
+    <string name="profile">Профіль</string>
+    <string name="subject_name">Назва предмету</string>
+    <string name="choose_subject">Обрати предмет</string>
+    <string name="day_of_week">День тижня</string>
+    <string name="pick_day">Обрати день</string>
+    <string name="pick_time">Обрати час</string>
+    <string name="lesson_start_time">Час заняття</string>
+    <string name="pick_day_of_week">Оберіть день тижня</string>
+    <string name="new_lesson">Нове заняття</string>
+    <string name="lesson_location">Місце заняття</string>
+    <string name="location_hint">Вкажіть аудиторію</string>
+    <string name="delete">Видалити</string>
+    <string name="save">Зберегти</string>
 </resources>

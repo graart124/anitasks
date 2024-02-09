@@ -21,4 +21,5 @@ sealed class AppTextStyle(fontFamily: FontFamily, weight: FontWeight) {
     data object RobotoMedium : AppTextStyle(Roboto, FontWeight.Medium)
     data object RobotoLight : AppTextStyle(Roboto, FontWeight.Light)
     data object RobotoBold : AppTextStyle(Roboto, FontWeight.Bold)
+    data object RobotoSemiBold : AppTextStyle(Roboto, FontWeight.SemiBold)
 }

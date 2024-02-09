@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.anitasks"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -86,6 +86,7 @@ dependencies {
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.core:core-ktx:+")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("com.google.android.material:material:1.11.0")
 
 
     // Compose
@@ -125,7 +126,10 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("io.coil-kt:coil-svg:2.5.0")
 
-    implementation("androidx.compose.runtime:runtime-livedata:1.7.0-alpha01")
+    //datepicker dialog
+    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+
+//    implementation("androidx.compose.runtime:runtime-livedata:1.7.0-alpha01")
 
 //    //System UI Controller
 //    implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.0")
