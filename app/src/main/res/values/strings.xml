@@ -16,4 +16,10 @@
     <string name="location_hint">Вкажіть аудиторію</string>
     <string name="delete">Видалити</string>
     <string name="save">Зберегти</string>
+    <string name="subjects">Предмети</string>
+    <string name="new_subject">Новий предмет</string>
+    <string name="subject_hint">Архітектура комп\'ютера</string>
+    <string name="teacher_name">Ім\'я викладача</string>
+    <string name="teacher_hint">Петренко Петро Петрович</string>
+    <string name="edit_subject">Редагування предмету</string>
 </resources>

@@ -24,4 +24,6 @@ interface SubjectDao {
 
     @Delete
     suspend fun deleteSubject(subject: Subject)
+    @Query("DELETE FROM subjects WHERE subject_id = :id")
+    suspend fun deleteSubjectById(id: Long)
 }

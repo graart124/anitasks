@@ -5,13 +5,14 @@ import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.Subject
 
 data class AddLessonUiState(
-    var id: Long? = null,
-    var dayOfWeek: DayOfWeek? = null,
-    var week: Int? = null,
-    var lessonType: LessonType? = null,
-    var startTime: String? = null,
-    var location: String? = null,
-    var subjectId: Long? = null,
-    var subject: Subject? = null
+    val id: Long? = null,
+    val dayOfWeek: DayOfWeek? = null,
+    val week: Int? = null,
+    val lessonType: LessonType? = null,
+    val startTime: String? = null,
+    val location: String? = null,
+    val subjectId: Long? = null,
+    val subject: Subject? = null,
+    val showProgressDialog:Boolean=false
 )
 

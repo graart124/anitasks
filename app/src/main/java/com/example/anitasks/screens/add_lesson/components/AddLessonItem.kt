@@ -59,8 +59,10 @@ fun AddLessonItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
+                    modifier = Modifier.weight(1f),
                     text = value ?: hint,
-                    style = AppTextStyle.RobotoRegular.sp14.copy(color = Color.White)
+                    style = AppTextStyle.RobotoRegular.sp14.copy(color = Color.White),
+                    maxLines = 1
                 )
                 Image(
                     modifier = Modifier.size(24.dp),

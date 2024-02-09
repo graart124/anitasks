@@ -8,11 +8,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,8 +54,12 @@ fun AddLessonScreen(
     lesson: Lesson?
 ) {
     val state = viewModel.uiState.collectAsState().value
+    val actionResult = viewModel.actionResult.collectAsState().value
+
     val context = LocalContext.current
     val timeDialogState = rememberMaterialDialogState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     resultSubjectRecipient.onNavResult { result ->
         when (result) {
@@ -61,10 +70,19 @@ fun AddLessonScreen(
         }
     }
 
+
+    LaunchedEffect(key1 = actionResult) {
+        if (!actionResult.info.isNullOrEmpty()) {
+            viewModel.actionResult.value.info?.let { snackbarHostState.showSnackbar(it) }
+        }
+    }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = { TopAppBar(label = stringResource(R.string.new_lesson)) },
         containerColor = Background
-
     ) {
         Column(
             modifier = Modifier
@@ -118,9 +136,11 @@ fun AddLessonScreen(
             NumberOfWeek(selectedWeek = state.week, onSelect = viewModel::selectWeek)
             Spacer(modifier = Modifier.height(24.dp))
             SaveDeleteButtons(onDeleteClick = {
-
+                keyboardController?.hide()
+                viewModel.onDeleteClick(context)
             }, onSaveClick = {
-
+                keyboardController?.hide()
+                viewModel.saveLesson()
             })
         }
     }

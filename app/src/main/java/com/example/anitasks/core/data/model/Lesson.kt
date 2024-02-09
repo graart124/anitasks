@@ -28,7 +28,7 @@ data class Lesson(
     @ColumnInfo(
         name = "subject_id",
         index = true
-    ) var subjectId: Int,
+    ) var subjectId: Long,
     @Ignore var subject: Subject? = null
 ) : Parcelable {
     constructor() : this(

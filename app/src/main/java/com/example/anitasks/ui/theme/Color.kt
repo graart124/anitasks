@@ -43,6 +43,7 @@ val DriverColor = Color(0x14212121)
 
 val Green = Color(0xFF3AB54A)
 
+val Blue = Color(0xFF536EFF)
 val Red = Color(0xFFEE4D4D)
 
 val StatusBarColor = Color(0xFF999999)
