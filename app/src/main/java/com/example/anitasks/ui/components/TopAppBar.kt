@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.anitasks.R
 import com.example.anitasks.ui.theme.AppTextStyle
@@ -26,7 +27,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun TopAppBar(
     label: String,
     backButtonAvailable: Boolean = false,
-    navigator: DestinationsNavigator?=null
+    navigator: DestinationsNavigator? = null
 ) {
     Row(
         modifier = Modifier
@@ -49,6 +50,13 @@ fun TopAppBar(
                 )
             }
         }
-        Text(text = label, style = AppTextStyle.RobotoBold.sp32.copy(color = Color.White))
+        Text(
+            text = label,
+            style = AppTextStyle.RobotoBold.sp32.copy(color = Color.White),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 40.dp)
+        )
     }
 }

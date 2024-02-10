@@ -2,6 +2,8 @@ package com.example.anitasks.screens.add_lesson
 
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anitasks.R
@@ -60,6 +62,7 @@ class AddLessonViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun selectStartTime(time: LocalTime) {
         _uiState.update { it.copy(startTime = time.format(DateTimeFormatter.ofPattern("HH:mm"))) }
     }
@@ -102,7 +105,7 @@ class AddLessonViewModel @Inject constructor(
                         location=location,
                         subjectId = subjectId!!
                     )
-                    _actionResult.update { Action(info = "Предмет успішно додано", success = true) }
+                    _actionResult.update { Action(info = "Заняття успішно додано", success = true) }
                 } else {
                     repository.updateLesson(
                         id = id,
@@ -115,7 +118,7 @@ class AddLessonViewModel @Inject constructor(
                     )
                     _actionResult.update {
                         Action(
-                            info = "Інформацію про предмет успішно оновленоя",
+                            info = "Інформацію про заняття успішно оновлено",
                             success = true
                         )
                     }
@@ -124,7 +127,7 @@ class AddLessonViewModel @Inject constructor(
             } catch (e: Exception) {
                 _actionResult.update {
                     it.copy(
-                        info = "Упс, щось пішло не так\nБудь ласка,cпробуйте зно\nПомилка: $e"
+                        info = "Упс, щось пішло не так\nБудь ласка,cпробуйте знову\nПомилка: $e"
                     )
                 }
             } finally {
