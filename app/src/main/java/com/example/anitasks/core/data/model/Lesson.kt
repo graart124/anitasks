@@ -43,13 +43,13 @@ data class Lesson(
     )
 }
 
-enum class DayOfWeek(val displayName: String) {
-    MONDAY("Понеділок"),
-    TUESDAY("Вівторок"),
-    WEDNESDAY("Середа"),
-    THURSDAY("Четвер"),
-    FRIDAY("П'ятниця"),
-    SATURDAY("Субота")
+enum class DayOfWeek(val displayName: String, val shortName: String) {
+    MONDAY("Понеділок", "Пн"),
+    TUESDAY("Вівторок", "Вт"),
+    WEDNESDAY("Середа", "Сер"),
+    THURSDAY("Четвер", "Чтв"),
+    FRIDAY("П'ятниця", "Пт"),
+    SATURDAY("Субота", "Сб")
 }
 
 enum class LessonType(val displayName: String) {

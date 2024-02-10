@@ -1,6 +1,7 @@
 package com.example.anitasks.screens.schedule
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -22,6 +23,7 @@ import com.example.anitasks.core.util.OnLifecycleEvent
 import com.example.anitasks.screens.destinations.AddLessonScreenDestination
 import com.example.anitasks.screens.schedule.components.CalendarView
 import com.example.anitasks.screens.schedule.components.LessonCardDialog
+import com.example.anitasks.screens.schedule.components.WeekSection
 import com.example.anitasks.ui.components.ProgressDialog
 import com.example.anitasks.ui.components.TopAppBar
 import com.example.anitasks.ui.theme.Background
@@ -73,13 +75,20 @@ fun ScheduleScreen(
             if (state.loading) {
                 ProgressDialog()
             } else {
-                CalendarView(
-                    week = state.currentWeek,
-                    lessons = state.lessons,
-                    onLessonClick = { lesson ->
-                        selectedLesson.value = lesson
-                    }
-                )
+                Column {
+                    WeekSection(
+                        currentWeek = state.currentWeek,
+                        onPrevWeekCLick = viewModel::moveToPrevWeek,
+                        onNextWeekCLick = viewModel::moveToNextWeek
+                    )
+                    CalendarView(
+                        week = state.currentWeek,
+                        lessons = state.lessons,
+                        onLessonClick = {
+
+                        }
+                    )
+                }
             }
         }
     }
@@ -91,5 +100,5 @@ fun ScheduleScreen(
             navigator.navigate(AddLessonScreenDestination(lesson))
         }
     )
-
 }
+

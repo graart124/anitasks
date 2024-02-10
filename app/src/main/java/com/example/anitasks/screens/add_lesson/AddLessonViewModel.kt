@@ -11,7 +11,7 @@ import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.Subject
 import com.example.anitasks.core.features.lessons.repository.LessonRepository
 import com.example.anitasks.screens.add_lesson.model.AddLessonUiState
-import com.example.anitasks.ui.util.Action
+import com.example.anitasks.ui.util.ActionWithData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +31,7 @@ class AddLessonViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AddLessonUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _actionResult = MutableStateFlow(Action())
+    private val _actionResult = MutableStateFlow(ActionWithData<String>())
     val actionResult = _actionResult.asStateFlow()
 
     fun initLesson(lesson: Lesson?) {
@@ -119,7 +119,7 @@ class AddLessonViewModel @Inject constructor(
                         location=location,
                         subjectId = subjectId!!
                     )
-                    _actionResult.update { Action(info = "Заняття успішно додано", success = true) }
+                    _actionResult.update { ActionWithData(info = "Заняття успішно додано", success = true) }
                 } else {
                     repository.updateLesson(
                         id = id,
@@ -131,9 +131,10 @@ class AddLessonViewModel @Inject constructor(
                         subjectId = subjectId!!
                     )
                     _actionResult.update {
-                        Action(
+                        ActionWithData(
                             info = "Інформацію про заняття успішно оновлено",
-                            success = true
+                            success = true,
+                            data = "edit"
                         )
                     }
                 }
@@ -152,23 +153,23 @@ class AddLessonViewModel @Inject constructor(
 
     private fun validateLessonData(): Boolean {
         if (_uiState.value.subjectId == null) {
-            _actionResult.update { Action(info = "Оберіть предмет") }
+            _actionResult.update { ActionWithData(info = "Оберіть предмет") }
             return false
         }
         if (_uiState.value.lessonType == null) {
-            _actionResult.update { Action(info = "Оберіть тип заняття") }
+            _actionResult.update { ActionWithData(info = "Оберіть тип заняття") }
             return false
         }
         if (_uiState.value.dayOfWeek == null) {
-            _actionResult.update { Action(info = "Оберіть день тижня") }
+            _actionResult.update { ActionWithData(info = "Оберіть день тижня") }
             return false
         }
         if (_uiState.value.startTime == null) {
-            _actionResult.update { Action(info = "Оберіть час початку заняття") }
+            _actionResult.update { ActionWithData(info = "Оберіть час початку заняття") }
             return false
         }
         if (_uiState.value.week == null) {
-            _actionResult.update { Action(info = "Вкажіть тиждень") }
+            _actionResult.update { ActionWithData(info = "Вкажіть тиждень") }
             return false
         }
         return true
@@ -206,11 +207,11 @@ class AddLessonViewModel @Inject constructor(
             _uiState.update { it.copy(showProgressDialog = true) }
             try {
                 repository.deleteLessonById(uiState.value.id!!)
-                _actionResult.update { Action(info = "Заняття успішно видалено", success = true) }
+                _actionResult.update { ActionWithData(info = "Заняття успішно видалено", success = true) }
                 clearSubjectData()
             } catch (e: Exception) {
                 _actionResult.update {
-                    Action(
+                    ActionWithData(
                         info = "Упс, щось пішло не так\nБудь ласка,cпробуйте знову",
                         success = false
                     )
