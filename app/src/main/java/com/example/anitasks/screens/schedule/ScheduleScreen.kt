@@ -9,6 +9,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,8 +17,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import com.example.anitasks.R
+import com.example.anitasks.core.data.model.Lesson
 import com.example.anitasks.core.util.OnLifecycleEvent
+import com.example.anitasks.screens.destinations.AddLessonScreenDestination
 import com.example.anitasks.screens.schedule.components.CalendarView
+import com.example.anitasks.screens.schedule.components.LessonCardDialog
 import com.example.anitasks.ui.components.ProgressDialog
 import com.example.anitasks.ui.components.TopAppBar
 import com.example.anitasks.ui.theme.Background
@@ -31,7 +35,7 @@ fun ScheduleScreen(
     navigator: DestinationsNavigator,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
-
+    val selectedLesson = remember { mutableStateOf<Lesson?>(null) }
     val actionResult = viewModel.actionResult.collectAsState().value
     val state = viewModel.uiState.collectAsState().value
     val context = LocalContext.current
@@ -71,10 +75,21 @@ fun ScheduleScreen(
             } else {
                 CalendarView(
                     week = state.currentWeek,
-                    lessons = state.lessons
+                    lessons = state.lessons,
+                    onLessonClick = {
+
+                    }
                 )
             }
         }
-
     }
+
+    LessonCardDialog(
+        lesson = selectedLesson.value,
+        onDismissClick = { selectedLesson.value = null },
+        onEditLessonClick = { lesson ->
+            navigator.navigate(AddLessonScreenDestination(lesson))
+        }
+    )
+
 }

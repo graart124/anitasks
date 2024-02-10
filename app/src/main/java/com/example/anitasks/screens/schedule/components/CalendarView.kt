@@ -1,6 +1,7 @@
 package com.example.anitasks.screens.schedule.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +33,8 @@ private val HEIGHT_OF_CELL = 75.dp
 @Composable
 fun CalendarView(
     week: Int,
-    lessons: List<Lesson>
+    lessons: List<Lesson>,
+    onLessonClick: (Lesson) -> Unit
 ) {
     Column {
         Row {
@@ -74,7 +76,11 @@ fun CalendarView(
                                         )
                                 )
                             } else {
-                                LessonCalendarItem(modifier = Modifier.weight(1f), lesson = lesson)
+                                LessonCalendarItem(
+                                    modifier = Modifier.weight(1f),
+                                    lesson = lesson,
+                                    onLessonClick = onLessonClick
+                                )
                             }
                         }
                     }
@@ -93,7 +99,8 @@ fun CalendarView(
 @Composable
 fun LessonCalendarItem(
     modifier: Modifier,
-    lesson: Lesson
+    lesson: Lesson,
+    onLessonClick: (Lesson) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -102,6 +109,9 @@ fun LessonCalendarItem(
                 color = lesson.lessonType.getColor(),
                 shape = RoundedCornerShape(8.dp)
             )
+            .clickable {
+                onLessonClick(lesson)
+            }
             .padding(horizontal = 4.dp, vertical = 8.dp)
     ) {
         Text(
