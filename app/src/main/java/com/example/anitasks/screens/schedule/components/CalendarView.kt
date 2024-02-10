@@ -45,19 +45,20 @@ fun CalendarView(
             }
         }
 
-        item {
-            //hours
-            Column {
-                for (hour in 6..24) {
-                    Text(
-                        modifier = Modifier
-                            .width(12.dp)
-                            .padding(vertical = 4.dp),
-                        text = "$hour:00"
-                    )
-                }
-            }
-        }
+//        item {
+//            //hours
+//            Column {
+//                for (hour in 6..24) {
+//                    Text(
+//                        modifier = Modifier
+//                            .width(12.dp)
+//                            .padding(vertical = 4.dp),
+//                        text = "$hour:00"
+//                    )
+//                }
+//            }
+//        }
+
 
         items((6..24).toList()) { hour ->
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -97,6 +98,7 @@ fun CalendarView(
                         }
                     }
                 }
+
             }
         }
     }

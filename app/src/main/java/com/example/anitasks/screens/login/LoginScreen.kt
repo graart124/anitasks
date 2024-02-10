@@ -72,6 +72,8 @@ fun LoginScreen(
     }
     val loginResult by viewModel.loginResult.collectAsState()
 
+    val webClientId = stringResource(id = R.string.web_client_id)
+
     LaunchedEffect(loginResult) {
         loginResult?.let { success ->
             if (success) {
@@ -125,7 +127,7 @@ fun LoginScreen(
                 GoogleButton(
                     onClick = {
                         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestServerAuthCode(Constants.GOOGLE_API_KEY, true)
+                            .requestServerAuthCode(webClientId,true)
                             .requestEmail()
                             .requestProfile()
                             .build()
