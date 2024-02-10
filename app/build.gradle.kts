@@ -137,8 +137,11 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation("com.google.firebase:firebase-config-ktx")
+    implementation("com.google.firebase:firebase-auth")
 
-//    // GMS
-//    implementation("com.google.android.gms:play-services-base:18.3.0")
-//    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
+    // GMS
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 }
+

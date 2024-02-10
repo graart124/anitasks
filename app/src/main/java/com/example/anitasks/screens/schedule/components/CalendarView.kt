@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.anitasks.core.data.model.DayOfWeek
 import com.example.anitasks.core.data.model.Lesson
+import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.getColor
 
 private val WIDTH_OF_HOURS = 26.dp
@@ -40,7 +41,8 @@ fun CalendarView(
             Row {
                 Box(modifier = Modifier.width(WIDTH_OF_HOURS))
                 for (dayOfWeek in DayOfWeek.values()) {
-                    Text(text = dayOfWeek.displayName, modifier = Modifier.weight(1f))
+                    Text(text = dayOfWeek.displayName, modifier = Modifier.weight(1f),
+                        style = AppTextStyle.RobotoRegular.sp14.copy(color = Color.White))
                 }
             }
         }
@@ -66,7 +68,8 @@ fun CalendarView(
                     modifier = Modifier
                         .width(12.dp)
                         .padding(vertical = 4.dp),
-                    text = "$hour:00"
+                    text = "$hour",
+                    style = AppTextStyle.RobotoRegular.sp14.copy(color = Color.White)
                 )
                 for (dayOfWeek in DayOfWeek.values()) {
                     val lesson = lessons.find {

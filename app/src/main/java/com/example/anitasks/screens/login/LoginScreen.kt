@@ -1,6 +1,9 @@
 package com.example.anitasks.screens.login
 
+import android.app.Activity
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,17 +43,17 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.anitasks.R
-import com.example.anitasks.core.util.Constants
 import com.example.anitasks.screens.destinations.ScheduleScreenDestination
-import com.example.anitasks.screens.destinations.SplashScreenDestination
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.Background
 import com.example.anitasks.ui.theme.Primary
 import com.example.anitasks.ui.theme.PurpleLight
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 @ExperimentalMaterialApi
 @Destination
@@ -63,13 +67,19 @@ fun LoginScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartIntentSenderForResult()
     ) { result ->
-        result.data?.let { intent ->
-            viewModel.processGoogleSignInResult(intent)
+        if (result.resultCode != Activity.RESULT_OK) {
+            return@rememberLauncherForActivityResult
         }
+        val oneTapClient = Identity.getSignInClient(context)
+        val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
+        viewModel.processGoogleSignInResult(credential)
     }
+
     val loginResult by viewModel.loginResult.collectAsState()
 
     val webClientId = stringResource(id = R.string.web_client_id)
@@ -126,14 +136,29 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(54.dp))
                 GoogleButton(
                     onClick = {
-                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestServerAuthCode(webClientId,true)
-                            .requestEmail()
-                            .requestProfile()
+                        val oneTapClient = Identity.getSignInClient(context)
+                        val signInRequest = BeginSignInRequest.builder()
+                            .setGoogleIdTokenRequestOptions(
+                                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                                    .setSupported(true)
+                                    .setServerClientId(webClientId)
+                                    .setFilterByAuthorizedAccounts(true)
+                                    .build()
+                            )
+                            .setAutoSelectEnabled(true)
                             .build()
-                        val gsc = GoogleSignIn.getClient(context, gso)
 
-                        launcher.launch(gsc.signInIntent)
+                        try {
+                            coroutineScope.launch {
+                                val result = oneTapClient.beginSignIn(signInRequest).await()
+
+                                val intentSenderRequest =
+                                    IntentSenderRequest.Builder(result.pendingIntent).build()
+                                launcher.launch(intentSenderRequest)
+                            }
+                        } catch (e: Exception) {
+                            Log.d("LOG", e.message.toString())
+                        }
                     }
                 )
 
