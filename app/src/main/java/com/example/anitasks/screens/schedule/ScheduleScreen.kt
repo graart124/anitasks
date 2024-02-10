@@ -13,7 +13,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -40,7 +39,6 @@ fun ScheduleScreen(
     val selectedLesson = remember { mutableStateOf<Lesson?>(null) }
     val actionResult = viewModel.actionResult.collectAsState().value
     val state = viewModel.uiState.collectAsState().value
-    val context = LocalContext.current
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -84,8 +82,8 @@ fun ScheduleScreen(
                     CalendarView(
                         week = state.currentWeek,
                         lessons = state.lessons,
-                        onLessonClick = {
-
+                        onLessonClick = { lesson ->
+                            selectedLesson.value = lesson
                         }
                     )
                 }
