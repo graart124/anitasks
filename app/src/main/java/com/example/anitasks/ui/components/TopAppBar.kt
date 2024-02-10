@@ -54,7 +54,7 @@ fun TopAppBar(
         }
         Text(
             text = label,
-            style = AppTextStyle.RobotoBold.sp32.copy(color = Color.White),
+            style = AppTextStyle.RobotoBold.sp28.copy(color = Color.White),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()

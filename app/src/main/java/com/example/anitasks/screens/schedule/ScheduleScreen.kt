@@ -84,6 +84,9 @@ fun ScheduleScreen(
                         lessons = state.lessons,
                         onLessonClick = { lesson ->
                             selectedLesson.value = lesson
+                        },
+                        onEmptyCellClick = { lessonArgs ->
+                            navigator.navigate(AddLessonScreenDestination(addLessonArgs = lessonArgs))
                         }
                     )
                 }
@@ -95,7 +98,7 @@ fun ScheduleScreen(
         lesson = selectedLesson.value,
         onDismissClick = { selectedLesson.value = null },
         onEditLessonClick = { lesson ->
-            navigator.navigate(AddLessonScreenDestination(lesson))
+            navigator.navigate(AddLessonScreenDestination(lesson = lesson))
         }
     )
 }

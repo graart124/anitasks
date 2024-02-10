@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.anitasks.core.data.model.DayOfWeek
 import com.example.anitasks.core.data.model.Lesson
+import com.example.anitasks.screens.add_lesson.model.AddLessonArgs
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.LightBlack
 import com.example.anitasks.ui.theme.UnselectedNavBarItemColor
@@ -37,12 +38,15 @@ private val HEIGHT_OF_CELL = 75.dp
 fun CalendarView(
     week: Int,
     lessons: List<Lesson>,
-    onLessonClick: (Lesson) -> Unit
+    onLessonClick: (Lesson) -> Unit,
+    onEmptyCellClick: (AddLessonArgs) -> Unit
 ) {
 
     Column {
         Row(
-            modifier = Modifier.height(52.dp).background(color = LightBlack)
+            modifier = Modifier
+                .height(52.dp)
+                .background(color = LightBlack)
         ) {
             Box(modifier = Modifier.width(WIDTH_OF_HOURS))
             for (dayOfWeek in DayOfWeek.values()) {
@@ -69,13 +73,19 @@ fun CalendarView(
                                 it.dayOfWeek == dayOfWeek && it.startTime.startsWith(if (hour < 10) "0$hour:" else "$hour:") && it.week == week
                             }
                             if (lesson == null) {
-                                Box(
+                                EmptyCalendarCell(
                                     modifier = Modifier
                                         .weight(1f)
-                                        .height(HEIGHT_OF_CELL)
-                                        .background(
-                                            color = Color.Transparent
+                                        .height(HEIGHT_OF_CELL),
+                                    onClick = {
+                                        onEmptyCellClick(
+                                            AddLessonArgs(
+                                                dayOfWeek = dayOfWeek,
+                                                startTime = (if (hour < 10) "0$hour" else hour.toString()) + ":00",
+                                                week = week
+                                            )
                                         )
+                                    }
                                 )
                             } else {
                                 LessonCalendarItem(
@@ -104,7 +114,9 @@ fun DayOfWeekCalendarItem(
     dayOfWeek: DayOfWeek
 ) {
     Column(
-        modifier=modifier.wrapContentHeight().padding(vertical = 16.dp),
+        modifier = modifier
+            .wrapContentHeight()
+            .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

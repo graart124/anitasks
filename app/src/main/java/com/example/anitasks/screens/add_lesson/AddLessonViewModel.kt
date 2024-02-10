@@ -10,6 +10,7 @@ import com.example.anitasks.core.data.model.Lesson
 import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.Subject
 import com.example.anitasks.core.features.lessons.repository.LessonRepository
+import com.example.anitasks.screens.add_lesson.model.AddLessonArgs
 import com.example.anitasks.screens.add_lesson.model.AddLessonUiState
 import com.example.anitasks.ui.util.ActionWithData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,6 +47,18 @@ class AddLessonViewModel @Inject constructor(
                 dayOfWeek = lesson.dayOfWeek,
                 startTime = lesson.startTime,
                 week = lesson.week
+            )
+        }
+    }
+
+
+    fun initLessonWithArgs(addLessonArgs: AddLessonArgs?) {
+        if (addLessonArgs == null) return
+        _uiState.update {
+            it.copy(
+                dayOfWeek = addLessonArgs.dayOfWeek,
+                startTime = addLessonArgs.startTime,
+                week = addLessonArgs.week
             )
         }
     }
@@ -112,22 +125,27 @@ class AddLessonViewModel @Inject constructor(
             try {
                 if (id == null) {
                     repository.createLesson(
-                        dayOfWeek=dayOfWeek!!,
-                        week=week!!,
-                        lessonType=lessonType!!,
-                        startTime=startTime!!,
-                        location=location,
+                        dayOfWeek = dayOfWeek!!,
+                        week = week!!,
+                        lessonType = lessonType!!,
+                        startTime = startTime!!,
+                        location = location,
                         subjectId = subjectId!!
                     )
-                    _actionResult.update { ActionWithData(info = "Заняття успішно додано", success = true) }
+                    _actionResult.update {
+                        ActionWithData(
+                            info = "Заняття успішно додано",
+                            success = true
+                        )
+                    }
                 } else {
                     repository.updateLesson(
                         id = id,
-                        dayOfWeek=dayOfWeek!!,
-                        week=week!!,
-                        lessonType=lessonType!!,
-                        startTime=startTime!!,
-                        location=location,
+                        dayOfWeek = dayOfWeek!!,
+                        week = week!!,
+                        lessonType = lessonType!!,
+                        startTime = startTime!!,
+                        location = location,
                         subjectId = subjectId!!
                     )
                     _actionResult.update {
@@ -207,7 +225,12 @@ class AddLessonViewModel @Inject constructor(
             _uiState.update { it.copy(showProgressDialog = true) }
             try {
                 repository.deleteLessonById(uiState.value.id!!)
-                _actionResult.update { ActionWithData(info = "Заняття успішно видалено", success = true) }
+                _actionResult.update {
+                    ActionWithData(
+                        info = "Заняття успішно видалено",
+                        success = true
+                    )
+                }
                 clearSubjectData()
             } catch (e: Exception) {
                 _actionResult.update {

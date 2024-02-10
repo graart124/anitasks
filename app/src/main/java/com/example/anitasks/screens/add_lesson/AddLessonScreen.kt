@@ -27,6 +27,7 @@ import com.example.anitasks.core.data.model.Subject
 import com.example.anitasks.screens.add_lesson.components.AddLessonItem
 import com.example.anitasks.screens.add_lesson.components.LessonTypes
 import com.example.anitasks.screens.add_lesson.components.NumberOfWeek
+import com.example.anitasks.screens.add_lesson.model.AddLessonArgs
 import com.example.anitasks.screens.destinations.SubjectListScreenDestination
 import com.example.anitasks.ui.components.SaveDeleteButtons
 import com.example.anitasks.ui.components.TextFieldWithIcon
@@ -51,7 +52,8 @@ fun AddLessonScreen(
     navigator: DestinationsNavigator,
     resultSubjectRecipient: ResultRecipient<SubjectListScreenDestination, Subject?>,
     viewModel: AddLessonViewModel = hiltViewModel(),
-    lesson: Lesson?
+    lesson: Lesson?=null,
+    addLessonArgs: AddLessonArgs?=null
 ) {
     val state = viewModel.uiState.collectAsState().value
     val actionResult = viewModel.actionResult.collectAsState().value
@@ -71,6 +73,10 @@ fun AddLessonScreen(
     }
     LaunchedEffect(key1 = lesson) {
         viewModel.initLesson(lesson)
+    }
+
+    LaunchedEffect(key1 = addLessonArgs) {
+        viewModel.initLessonWithArgs(addLessonArgs)
     }
 
 
@@ -93,7 +99,7 @@ fun AddLessonScreen(
                     R.string.editLesson
                 ),
                 navigator = navigator,
-                backButtonAvailable = lesson != null
+                backButtonAvailable = lesson != null || addLessonArgs!=null
             )
         },
         containerColor = Background
