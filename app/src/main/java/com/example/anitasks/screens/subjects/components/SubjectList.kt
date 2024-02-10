@@ -83,7 +83,6 @@ fun SubjectItem(
                 text = subject.teacherName?:"",
                 style = AppTextStyle.RobotoRegular.sp16.copy(color = Color.White),
                 maxLines = 1,
-
             )
         }
         Column(

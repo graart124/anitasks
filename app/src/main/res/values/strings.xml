@@ -24,4 +24,7 @@
     <string name="edit_subject">Редагування предмету</string>
     <string name="schedule">Розклад</string>
     <string name="web_client_id">355341621884-ooq9enlpuod9qffjjbi64s9gkqvlb1s3.apps.googleusercontent.com</string>
+    <string name="dismiss">Скасувати</string>
+    <string name="toEdit">Редагувати</string>
+    <string name="editLesson">Редагувати заняття</string>
 </resources>

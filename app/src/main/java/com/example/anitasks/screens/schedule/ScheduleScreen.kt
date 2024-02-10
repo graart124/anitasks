@@ -76,8 +76,8 @@ fun ScheduleScreen(
                 CalendarView(
                     week = state.currentWeek,
                     lessons = state.lessons,
-                    onLessonClick = {
-
+                    onLessonClick = { lesson ->
+                        selectedLesson.value = lesson
                     }
                 )
             }

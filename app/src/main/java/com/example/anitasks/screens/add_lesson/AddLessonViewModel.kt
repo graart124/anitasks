@@ -2,12 +2,11 @@ package com.example.anitasks.screens.add_lesson
 
 import android.app.AlertDialog
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anitasks.R
 import com.example.anitasks.core.data.model.DayOfWeek
+import com.example.anitasks.core.data.model.Lesson
 import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.Subject
 import com.example.anitasks.core.features.lessons.repository.LessonRepository
@@ -34,6 +33,22 @@ class AddLessonViewModel @Inject constructor(
 
     private val _actionResult = MutableStateFlow(Action())
     val actionResult = _actionResult.asStateFlow()
+
+    fun initLesson(lesson: Lesson?) {
+        if (lesson == null) return
+        _uiState.update {
+            it.copy(
+                id = lesson.id,
+                subjectId = lesson.subjectId,
+                subject = lesson.subject,
+                lessonType = lesson.lessonType,
+                location = lesson.location,
+                dayOfWeek = lesson.dayOfWeek,
+                startTime = lesson.startTime,
+                week = lesson.week
+            )
+        }
+    }
 
     fun selectLessonType(lessonType: LessonType) {
         _uiState.update { it.copy(lessonType = lessonType) }
@@ -62,7 +77,6 @@ class AddLessonViewModel @Inject constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun selectStartTime(time: LocalTime) {
         _uiState.update { it.copy(startTime = time.format(DateTimeFormatter.ofPattern("HH:mm"))) }
     }

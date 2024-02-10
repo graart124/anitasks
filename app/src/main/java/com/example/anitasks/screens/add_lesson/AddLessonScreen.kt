@@ -69,6 +69,9 @@ fun AddLessonScreen(
             }
         }
     }
+    LaunchedEffect(key1 = lesson) {
+        viewModel.initLesson(lesson)
+    }
 
 
     LaunchedEffect(key1 = actionResult) {
@@ -81,7 +84,12 @@ fun AddLessonScreen(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
-        topBar = { TopAppBar(label = stringResource(R.string.new_lesson)) },
+        topBar = {
+            TopAppBar(label = if(lesson == null)stringResource(R.string.new_lesson) else stringResource(
+                R.string.editLesson),
+            navigator = navigator,
+                backButtonAvailable = lesson != null
+            )},
         containerColor = Background
     ) {
         Column(
