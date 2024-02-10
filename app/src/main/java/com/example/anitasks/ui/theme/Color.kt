@@ -37,7 +37,7 @@ val PracticalColor = Color(0xFF4AD2C9)
 val SeminarColor = Color(0xFF536EFF)
 
 val Orange = Color(0xFFFA7942)
-val DarkGray = Color(0xFF494442)
+val LightBlack = Color(0xFF010618)
 val MediumGray = Color(0xFF9E9E9E)
 val LightGray = Color(0xFFF6F6F6)
 val DriverColor = Color(0x14212121)
