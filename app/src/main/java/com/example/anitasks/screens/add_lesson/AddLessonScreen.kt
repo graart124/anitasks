@@ -78,6 +78,9 @@ fun AddLessonScreen(
         if (!actionResult.info.isNullOrEmpty()) {
             viewModel.actionResult.value.info?.let { snackbarHostState.showSnackbar(it) }
         }
+        if (actionResult.success == true && actionResult.data == "edit") {
+            navigator.navigateUp()
+        }
     }
 
     Scaffold(
@@ -85,11 +88,14 @@ fun AddLessonScreen(
             SnackbarHost(hostState = snackbarHostState)
         },
         topBar = {
-            TopAppBar(label = if(lesson == null)stringResource(R.string.new_lesson) else stringResource(
-                R.string.editLesson),
-            navigator = navigator,
+            TopAppBar(
+                label = if (lesson == null) stringResource(R.string.new_lesson) else stringResource(
+                    R.string.editLesson
+                ),
+                navigator = navigator,
                 backButtonAvailable = lesson != null
-            )},
+            )
+        },
         containerColor = Background
     ) {
         Column(
