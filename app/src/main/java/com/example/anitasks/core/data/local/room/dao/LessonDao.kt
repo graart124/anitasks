@@ -14,6 +14,9 @@ interface LessonDao {
     @Query("SELECT * FROM lessons")
     suspend fun getAllLessons(): List<Lesson>
 
+    @Query("SELECT * FROM lessons WHERE week = :week")
+    suspend fun getLessonsByWeek(week:Int): List<Lesson>
+
     @Query("SELECT * FROM lessons WHERE id = :lessonId")
     suspend fun getLessonById(lessonId: Long): Lesson?
 

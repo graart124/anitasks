@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.anitasks.R
+import com.example.anitasks.core.util.Constants
 import com.example.anitasks.screens.destinations.ScheduleScreenDestination
 import com.example.anitasks.screens.destinations.SplashScreenDestination
 import com.example.anitasks.ui.theme.AppTextStyle
@@ -124,6 +125,7 @@ fun LoginScreen(
                 GoogleButton(
                     onClick = {
                         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestServerAuthCode(Constants.GOOGLE_API_KEY, true)
                             .requestEmail()
                             .requestProfile()
                             .build()

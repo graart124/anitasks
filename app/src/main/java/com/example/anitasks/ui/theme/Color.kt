@@ -1,5 +1,6 @@
 package com.example.anitasks.ui.theme
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.LessonType.*
@@ -22,8 +23,9 @@ val Background = Color(0xFF21283F)
 val PurpleLight = Color(0xFFA85CE3)
 val PurpleDark = Color(0xFF404471)
 
-fun getColorByLessonType(lessonType: LessonType): Color {
-    return when (lessonType) {
+@Composable
+fun LessonType.getColor(): Color {
+    return when (this) {
         LECTURE -> LectureColor
         SEMINAR -> SeminarColor
         PRACTICAL -> PracticalColor

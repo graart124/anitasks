@@ -14,6 +14,15 @@ class LessonRepository(
         return dao.getAllLessons()
     }
 
+    suspend fun getLessonsByWeek(week: Int = 1): List<Lesson> {
+        val lessons = dao.getLessonsByWeek(week)
+        val lessonsWithSubjectInfo = lessons.map { lesson ->
+            val lessonSubject = subjectDao.getSubjectById(lesson.subjectId)
+            lesson.copy(subject = lessonSubject)
+        }
+        return lessonsWithSubjectInfo
+    }
+
     suspend fun getLessonById(lessonId: Long): Lesson? {
         return dao.getLessonById(lessonId)
     }

@@ -19,8 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.NavBarColor
-import com.example.anitasks.ui.theme.getColorByLessonType
-
+import com.example.anitasks.ui.theme.getColor
 
 @Composable
 fun LessonTypes(
@@ -63,7 +62,11 @@ fun LessonTypeItem(
     val selected = selectedLessonType == lessonType
     Box(
         modifier = modifier
-            .background(color = getColorByLessonType(lessonType).copy(if(selected) 1f else 0.7f), shape = RoundedCornerShape(8.dp))
+            .background(
+                color = lessonType
+                    .getColor()
+                    .copy(if (selected) 1f else 0.7f), shape = RoundedCornerShape(8.dp)
+            )
             .border(
                 width = if (selected) 2.dp else 0.dp,
                 color = NavBarColor,
