@@ -160,7 +160,7 @@ class AddLessonViewModel @Inject constructor(
             } catch (e: Exception) {
                 _actionResult.update {
                     it.copy(
-                        info = "Упс, щось пішло не так\nБудь ласка,cпробуйте знову\nПомилка: $e"
+                        info = e.message
                     )
                 }
             } finally {
