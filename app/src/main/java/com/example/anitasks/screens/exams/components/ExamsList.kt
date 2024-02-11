@@ -1,9 +1,12 @@
 package com.example.anitasks.screens.exams.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,9 +15,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,9 +30,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.anitasks.R
 import com.example.anitasks.core.data.model.Exam
+import com.example.anitasks.ui.theme.AddmarkColor
 import com.example.anitasks.ui.theme.AppTextStyle
+import com.example.anitasks.ui.theme.MarkColor
 import com.example.anitasks.ui.theme.PurpleDark
 import com.example.anitasks.ui.theme.Red
+import com.example.anitasks.ui.theme.UnselectedNavBarItemColor
+import java.time.LocalDate
 
 @Composable
 fun ExamsList(
@@ -42,7 +51,7 @@ fun ExamsList(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(exams) { subject ->
-            SubjectItem(
+            ExamItem(
                 subject,
                 onChooseExam,
                 onDeleteExam,
@@ -53,7 +62,7 @@ fun ExamsList(
 }
 
 @Composable
-fun SubjectItem(
+fun ExamItem(
     exam: Exam,
     onChooseExam: (Exam) -> Unit,
     onDeleteExam: (Exam) -> Unit,
@@ -73,7 +82,7 @@ fun SubjectItem(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = exam.subject?.name?:"",
+                text = exam.subject?.name ?: "",
                 style = AppTextStyle.RobotoSemiBold.sp18.copy(color = Color.White),
                 maxLines = 1,
             )
@@ -83,27 +92,76 @@ fun SubjectItem(
                 style = AppTextStyle.RobotoRegular.sp16.copy(color = Color.White),
                 maxLines = 1,
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = exam.location.toString(),
+                style = AppTextStyle.RobotoRegular.sp16.copy(color = Color.White),
+                maxLines = 1,
+            )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                modifier = Modifier.clickable {
-                    onEditExam(exam)
-                },
-                painter = painterResource(id = R.drawable.ic_edit),
-                contentDescription = "edit icon"
-            )
-            Spacer(modifier = Modifier.height(14.dp))
-            Image(
-                modifier = Modifier.clickable {
-                    onDeleteExam(exam)
-                },
-                colorFilter = ColorFilter.tint(color = Red),
-                painter = painterResource(id = R.drawable.ic_delete),
-                contentDescription = "delete icon"
-            )
+        )
+        {
+            Row {
+                Image(
+                    modifier = Modifier.clickable {
+                        onEditExam(exam)
+                    },
+                    painter = painterResource(id = R.drawable.ic_edit),
+                    contentDescription = "edit icon"
+                )
+                Spacer(modifier = Modifier.width(14.dp))
+                Image(
+                    modifier = Modifier.clickable {
+                        onDeleteExam(exam)
+                    },
+                    colorFilter = ColorFilter.tint(color = Red),
+                    painter = painterResource(id = R.drawable.ic_delete),
+                    contentDescription = "delete icon"
+                )
+            }
+            Spacer(modifier = Modifier.height(17.dp))
+            if (exam.mark != null) {
+                Box(
+                    modifier = Modifier
+                        .border(
+                            BorderStroke(0.5.dp, UnselectedNavBarItemColor),
+                            RoundedCornerShape(8.dp)
+                        )
+                        .padding(8.dp),
+                )
+                {
+                    Text(
+                        text = exam.mark.toString(),
+                        style = AppTextStyle.RobotoRegular.sp10.copy(color = MarkColor),
+                        maxLines = 1,
+                    )
+                }
+
+            }
+            else if(exam.date.isBefore(LocalDate.now()))
+            {
+                OutlinedButton(
+                    modifier = Modifier,
+                    onClick = {
+
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    border = BorderStroke(0.5.dp, UnselectedNavBarItemColor),
+                    contentPadding = PaddingValues(8.dp)
+                )
+                {
+                    Text(
+                        text = "Вкажіть оцінку",
+                        style = AppTextStyle.RobotoRegular.sp10.copy(color = AddmarkColor),
+                        maxLines = 1,
+                    )
+                }
+            }
         }
+
+
     }
 
 }

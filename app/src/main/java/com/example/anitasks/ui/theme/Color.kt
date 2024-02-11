@@ -41,8 +41,8 @@ val LightBlack = Color(0xFF010618)
 val MediumGray = Color(0xFF9E9E9E)
 val LightGray = Color(0xFFF6F6F6)
 val DriverColor = Color(0x14212121)
-
-
+val MarkColor = Color(0xFF89CA61)
+val AddmarkColor = Color(0xFFC44EFB)
 val Green = Color(0xFF3AB54A)
 
 val Blue = Color(0xFF536EFF)
