@@ -163,8 +163,8 @@ fun AddExamScreen(
 
     if (state.showDeleteDialog) {
         DeleteItemDialog(
-            title = "Видалити екзамен?",
-            subTitle = "Аніта попереджає, пілся видалення екзамен не буде враховуватись у статистику",
+            title = stringResource(R.string.delete_exam),
+            subTitle = stringResource(R.string.sure_to_delete_exam),
             onDeleteClick = {
                 viewModel.deleteExam()
             }, onDismissClick = {

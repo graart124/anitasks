@@ -35,4 +35,9 @@
     <string name="exam_time">Час екзамену</string>
     <string name="exam_date">Дата екзамену</string>
     <string name="pick_date">Обрати дату</string>
+    <string name="set_mark">Вкажіть оцінку</string>
+    <string name="delete_exam">Видалити екзамен?</string>
+    <string name="sure_to_delete_exam">Аніта попереджає, пілся видалення екзамен не буде враховуватись у статистику</string>
+    <string name="setup_mark">Вкажіть оцінку</string>
+    <string name="mark_must_be_here">Оцінка має бути тут</string>
 </resources>

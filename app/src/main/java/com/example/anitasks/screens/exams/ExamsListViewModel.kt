@@ -2,6 +2,7 @@ package com.example.anitasks.screens.exams
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.anitasks.core.data.model.Exam
 import com.example.anitasks.features.exams.repository.ExamRepository
 import com.example.anitasks.screens.exams.model.ExamsListUiState
 import com.example.anitasks.ui.util.Action
@@ -52,6 +53,66 @@ class ExamsListViewModel @Inject constructor(
             }
         }
 
+    }
+
+    fun deleteExam(exam: Exam) {
+        viewModelScope.launch(
+            CoroutineExceptionHandler { _, thr ->
+                thr.printStackTrace()
+            }
+        ) {
+            _uiState.update { it.copy(loading = true) }
+            try {
+                repository.deleteExam(exam = exam)
+                _actionResult.update { Action(info = "Екзамен успішно видалено", success = true) }
+
+            } catch (e: Exception) {
+                _actionResult.update {
+                    Action(
+                        info = "Упс, щось пішло не так\nБудь ласка,cпробуйте знову",
+                        success = false
+                    )
+                }
+            } finally {
+                loadExams()
+            }
+        }
+    }
+
+    fun selectExamToChangeMark(exam: Exam) {
+        _uiState.update { it.copy(selectedExam = exam) }
+    }
+
+    fun onSelectedExamMarkChange(mark: String) {
+        _uiState.update { it.copy(selectedExam = it.selectedExam?.copy(mark = mark.toFloat())) }
+    }
+
+    fun clearSelectedExam() {
+        _uiState.update { it.copy(selectedExam = null) }
+    }
+
+    fun updateSelectedExam() {
+        viewModelScope.launch(
+            CoroutineExceptionHandler { _, thr ->
+                thr.printStackTrace()
+            }
+        ) {
+            _uiState.update { it.copy(loading = true) }
+            try {
+                repository.updateExam(exam = _uiState.value.selectedExam!!)
+                _actionResult.update { Action(info = "Оцінка успішно встановлена", success = true) }
+                clearSelectedExam()
+            } catch (e: Exception) {
+                _actionResult.update {
+                    Action(
+                        info = "Упс, щось пішло не так\nБудь ласка,cпробуйте знову",
+                        success = false
+                    )
+                }
+            } finally {
+                loadExams()
+            }
+        }
     }
 
 }

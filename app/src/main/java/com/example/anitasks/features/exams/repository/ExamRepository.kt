@@ -56,6 +56,13 @@ class ExamRepository(
         )
     }
 
+
+    suspend fun updateExam(
+        exam: Exam
+    ) {
+        dao.updateExam(exam)
+    }
+
     suspend fun deleteExam(exam: Exam) {
         dao.deleteExam(exam)
     }

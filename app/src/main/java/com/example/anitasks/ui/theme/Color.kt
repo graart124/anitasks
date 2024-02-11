@@ -36,17 +36,9 @@ val LectureColor = Color(0xFFFFC374)
 val PracticalColor = Color(0xFF4AD2C9)
 val SeminarColor = Color(0xFF536EFF)
 
-val Orange = Color(0xFFFA7942)
 val LightBlack = Color(0xFF010618)
-val MediumGray = Color(0xFF9E9E9E)
-val LightGray = Color(0xFFF6F6F6)
-val DriverColor = Color(0x14212121)
 val MarkColor = Color(0xFF89CA61)
-val AddmarkColor = Color(0xFFC44EFB)
-val Green = Color(0xFF3AB54A)
+val AddMarkColor = Color(0xFFC44EFB)
 
 val Blue = Color(0xFF536EFF)
 val Red = Color(0xFFEE4D4D)
-
-val StatusBarColor = Color(0xFF999999)
-val NavigationBarColor = Color(0xFFF2F2F2)

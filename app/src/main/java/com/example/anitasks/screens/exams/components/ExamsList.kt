@@ -27,10 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.anitasks.R
 import com.example.anitasks.core.data.model.Exam
-import com.example.anitasks.ui.theme.AddmarkColor
+import com.example.anitasks.ui.theme.AddMarkColor
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.MarkColor
 import com.example.anitasks.ui.theme.PurpleDark
@@ -41,7 +42,7 @@ import java.time.LocalDate
 @Composable
 fun ExamsList(
     exams: List<Exam>,
-    onChooseExam: (Exam) -> Unit,
+    onSetExamMark: (Exam) -> Unit,
     onDeleteExam: (Exam) -> Unit,
     onEditExam: (Exam) -> Unit
 ) {
@@ -50,10 +51,10 @@ fun ExamsList(
         contentPadding = PaddingValues(start = 10.dp, end = 10.dp, bottom = 100.dp, top = 18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(exams) { subject ->
+        items(exams) { exam ->
             ExamItem(
-                subject,
-                onChooseExam,
+                exam,
+                onSetExamMark,
                 onDeleteExam,
                 onEditExam
             )
@@ -64,16 +65,13 @@ fun ExamsList(
 @Composable
 fun ExamItem(
     exam: Exam,
-    onChooseExam: (Exam) -> Unit,
+    onSetExamMark: (Exam) -> Unit,
     onDeleteExam: (Exam) -> Unit,
     onEditExam: (Exam) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onChooseExam(exam)
-            }
             .background(color = PurpleDark, shape = RoundedCornerShape(8.dp))
             .padding(horizontal = 20.dp)
             .padding(top = 20.dp, bottom = 10.dp)
@@ -92,12 +90,14 @@ fun ExamItem(
                 style = AppTextStyle.RobotoRegular.sp16.copy(color = Color.White),
                 maxLines = 1,
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = exam.location.toString(),
-                style = AppTextStyle.RobotoRegular.sp16.copy(color = Color.White),
-                maxLines = 1,
-            )
+            if (exam.location!=null) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = exam.location!!,
+                    style = AppTextStyle.RobotoRegular.sp16.copy(color = Color.White),
+                    maxLines = 1,
+                )
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -129,23 +129,24 @@ fun ExamItem(
                             BorderStroke(0.5.dp, UnselectedNavBarItemColor),
                             RoundedCornerShape(8.dp)
                         )
+                        .clickable {
+                            onSetExamMark(exam)
+                        }
                         .padding(8.dp),
                 )
                 {
                     Text(
                         text = exam.mark.toString(),
-                        style = AppTextStyle.RobotoRegular.sp10.copy(color = MarkColor),
+                        style = AppTextStyle.RobotoRegular.sp16.copy(color = MarkColor),
                         maxLines = 1,
                     )
                 }
 
-            }
-            else if(exam.date.isBefore(LocalDate.now()))
-            {
+            } else if (exam.date.isBefore(LocalDate.now())) {
                 OutlinedButton(
                     modifier = Modifier,
                     onClick = {
-
+                        onSetExamMark(exam)
                     },
                     shape = RoundedCornerShape(8.dp),
                     border = BorderStroke(0.5.dp, UnselectedNavBarItemColor),
@@ -153,8 +154,8 @@ fun ExamItem(
                 )
                 {
                     Text(
-                        text = "Вкажіть оцінку",
-                        style = AppTextStyle.RobotoRegular.sp10.copy(color = AddmarkColor),
+                        text = stringResource(R.string.set_mark),
+                        style = AppTextStyle.RobotoRegular.sp10.copy(color = AddMarkColor),
                         maxLines = 1,
                     )
                 }

@@ -36,6 +36,10 @@ class ProfileViewModel @Inject constructor(
         loadLessons()
         loadExams()
     }
+    fun onResume(){
+        loadExams()
+        loadLessons()
+    }
 
     private fun loadExams() {
         viewModelScope.launch(
@@ -53,7 +57,7 @@ class ProfileViewModel @Inject constructor(
     }
 
 
-    fun loadLessons() {
+   private fun loadLessons() {
         viewModelScope.launch(
             CoroutineExceptionHandler { _, thr ->
                 thr.printStackTrace()

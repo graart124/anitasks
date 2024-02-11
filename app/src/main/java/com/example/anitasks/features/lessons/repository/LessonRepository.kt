@@ -42,7 +42,7 @@ class LessonRepository(
             subjectId = subjectId
         )
         checkIfExists(lesson)
-        dao.updateLesson(lesson)
+        dao.insertLesson(lesson)
     }
 
     suspend fun updateLesson(
@@ -67,39 +67,33 @@ class LessonRepository(
         dao.updateLesson(lesson)
     }
 
-    private suspend fun checkIfExists(lesson: Lesson){
+    private suspend fun checkIfExists(lesson: Lesson) {
 
         val lessons = dao.getLessonsByWeek(lesson.week)
-        // Створіть змінну для тривалості 1.5 години
         val duration = ofMinutes(91)
 
-// Створіть змінну для часу початку заданого уроку
-        val lessonTime = LocalTime.parse (lesson.startTime)
+        val lessonTime = LocalTime.parse(lesson.startTime)
 
-// Отримайте межі діапазону часу
-        val lowerBound = lessonTime.minus (duration)
-        val upperBound = lessonTime.plus (duration)
+        val lowerBound = lessonTime.minus(duration)
+        val upperBound = lessonTime.plus(duration)
 
-// Знайдіть уроки, які відповідають критеріям
         val filteredLessons = lessons.filter {
-            // Перетворіть час початку кожного уроку на об'єкт LocalTime
-            val itTime = LocalTime.parse (it.startTime)
+            val itTime = LocalTime.parse(it.startTime)
 
             val isNotIdentical = it.id != lesson.id
-            // Перевірте, чи знаходиться час початку між межами діапазону
-            val isInRange = itTime.isAfter (lowerBound) && itTime.isBefore (upperBound)
+            val isInRange = itTime.isAfter(lowerBound) && itTime.isBefore(upperBound)
 
-            // Перевірте, чи співпадає день тижня
             val isSameDay = it.dayOfWeek == lesson.dayOfWeek
 
-            // Поверніть true, якщо обидві умови виконуються
+
             isInRange && isSameDay && isNotIdentical
         }
 
-        if(filteredLessons.isNotEmpty())
+        if (filteredLessons.isNotEmpty())
             throw Exception("В даний проміжок часу вже є заняття. Оберіть інший час.")
 
     }
+
     suspend fun deleteLessonById(id: Long) {
         dao.deleteLessonById(id)
     }

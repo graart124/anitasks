@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.anitasks.ui.theme.AppTextStyle
 import com.example.anitasks.ui.theme.PurpleDark
@@ -38,7 +40,8 @@ fun TextFieldWithIcon(
     value: String?,
     hint: String,
     @DrawableRes iconId: Int,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    keyboardOptions: KeyboardOptions? = null
 ) {
     Column(
         modifier = Modifier
@@ -62,6 +65,7 @@ fun TextFieldWithIcon(
                 onValueChange = onValueChange,
                 textStyle = AppTextStyle.RobotoRegular.sp14.copy(color = Color.White),
                 maxLines = 1,
+                keyboardOptions = keyboardOptions?:KeyboardOptions(keyboardType = KeyboardType.Text),
                 singleLine = true,
                 decorationBox = { innerTextField ->
                     if (value.isNullOrEmpty()) {

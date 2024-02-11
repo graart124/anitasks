@@ -33,7 +33,7 @@ fun ProfileScreen(
 
     OnLifecycleEvent { _, event ->
         if (event == Lifecycle.Event.ON_RESUME) {
-            viewModel.loadLessons()
+            viewModel.onResume()
         }
     }
 
