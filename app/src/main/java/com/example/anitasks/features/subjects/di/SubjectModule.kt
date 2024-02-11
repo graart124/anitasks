@@ -1,7 +1,7 @@
-package com.example.anitasks.core.features.lessons.di
+package com.example.anitasks.features.subjects.di
 
 import com.example.anitasks.core.data.local.room.db.AnitaskAppDatabase
-import com.example.anitasks.core.features.lessons.repository.LessonRepository
+import com.example.anitasks.features.subjects.repository.SubjectRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,13 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LessonModule {
+object SubjectModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(
-        db: AnitaskAppDatabase
-    ): LessonRepository {
-        return LessonRepository(db.lessonDao, db.subjectDao)
+    fun provideSubjectRepository(db: AnitaskAppDatabase): SubjectRepository {
+        return SubjectRepository(db.subjectDao)
     }
 }

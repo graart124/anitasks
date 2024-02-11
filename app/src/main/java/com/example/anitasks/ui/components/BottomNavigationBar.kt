@@ -24,6 +24,7 @@ import com.example.anitasks.screens.NavGraphs
 import com.example.anitasks.screens.appCurrentDestinationAsState
 import com.example.anitasks.screens.destinations.AddLessonScreenDestination
 import com.example.anitasks.screens.destinations.Destination
+import com.example.anitasks.screens.destinations.ExamsListScreenDestination
 import com.example.anitasks.screens.destinations.ProfileScreenDestination
 import com.example.anitasks.screens.destinations.ScheduleScreenDestination
 import com.example.anitasks.screens.startAppDestination
@@ -44,6 +45,7 @@ fun BottomNavigationBar(
     val items = listOf(
         BottomNavigationItem.Schedule,
         BottomNavigationItem.AddLesson,
+        BottomNavigationItem.Session,
         BottomNavigationItem.Profile
     )
     if (items.any { it.destination == currentDestination }) {
@@ -114,7 +116,8 @@ sealed class BottomNavigationItem(val destination: Destination, val icon: Int, v
 
     data object AddLesson :
         BottomNavigationItem(AddLessonScreenDestination, R.drawable.ic_bottom_add_lesson, "Нове заняття")
-
+    data object Session :
+        BottomNavigationItem(ExamsListScreenDestination, R.drawable.ic_bottom_exams, "Сесія")
     data object Profile :
         BottomNavigationItem(ProfileScreenDestination, R.drawable.ic_bottom_profile, "Профіль")
 }

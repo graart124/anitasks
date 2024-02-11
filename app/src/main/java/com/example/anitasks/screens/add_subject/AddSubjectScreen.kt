@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.anitasks.R
 import com.example.anitasks.core.data.model.Subject
+import com.example.anitasks.ui.components.DeleteItemDialog
 import com.example.anitasks.ui.components.ProgressDialog
 import com.example.anitasks.ui.components.SaveDeleteButtons
 import com.example.anitasks.ui.components.TextFieldWithIcon
@@ -28,7 +29,6 @@ import com.example.anitasks.ui.components.TopAppBar
 import com.example.anitasks.ui.theme.Background
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @Destination
@@ -52,6 +52,7 @@ fun AddSubjectScreen(
 
     LaunchedEffect(key1 = actionResult) {
         if (actionResult.success == true) {
+            //global toast
             Toast.makeText(context, actionResult.info, Toast.LENGTH_SHORT).show()
             navigator.navigateUp()
         }
@@ -102,7 +103,7 @@ fun AddSubjectScreen(
             Spacer(modifier = Modifier.height(24.dp))
             SaveDeleteButtons(onDeleteClick = {
                 keyboardController?.hide()
-                viewModel.onDeleteClick(context)
+                viewModel.onDeleteClick()
             }, onSaveClick = {
                 keyboardController?.hide()
                 viewModel.saveSubject()
@@ -112,5 +113,17 @@ fun AddSubjectScreen(
 
     if (state.showProgressDialog) {
         ProgressDialog()
+    }
+
+    if (state.showDeleteDialog) {
+        DeleteItemDialog(
+            title = stringResource(R.string.delete_subject),
+            subTitle = stringResource(R.string.sure_to_delete_subject),
+            onDeleteClick = {
+                viewModel.deleteSubject()
+            }, onDismissClick = {
+                viewModel.dismissDeleteDialog()
+            }
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.anitasks.core.features.user.repository
+package com.example.anitasks.features.user.repository
 
 import com.example.anitasks.core.data.local.storage.UserDataLocalStorage
 import com.example.anitasks.core.data.model.UserData

@@ -3,7 +3,7 @@ package com.example.anitasks.screens.login
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.anitasks.core.features.user.repository.UserRepository
+import com.example.anitasks.features.user.repository.UserRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.lifecycle.HiltViewModel

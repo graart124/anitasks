@@ -3,7 +3,7 @@ package com.example.anitasks.screens.schedule
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anitasks.core.data.local.storage.LastWeekLocalStorage
-import com.example.anitasks.core.features.lessons.repository.LessonRepository
+import com.example.anitasks.features.lessons.repository.LessonRepository
 import com.example.anitasks.screens.schedule.model.ScheduleScreenUiState
 import com.example.anitasks.ui.util.Action
 import dagger.hilt.android.lifecycle.HiltViewModel

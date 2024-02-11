@@ -1,4 +1,4 @@
-package com.example.anitasks.core.features.lessons.repository
+package com.example.anitasks.features.lessons.repository
 
 import com.example.anitasks.core.data.local.room.dao.LessonDao
 import com.example.anitasks.core.data.local.room.dao.SubjectDao
@@ -21,10 +21,6 @@ class LessonRepository(
             lesson.copy(subject = lessonSubject)
         }
         return lessonsWithSubjectInfo
-    }
-
-    suspend fun getLessonById(lessonId: Long): Lesson? {
-        return dao.getLessonById(lessonId)
     }
 
     suspend fun createLesson(

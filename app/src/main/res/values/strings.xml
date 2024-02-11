@@ -27,4 +27,12 @@
     <string name="dismiss">Скасувати</string>
     <string name="toEdit">Редагувати</string>
     <string name="editLesson">Редагувати заняття</string>
+    <string name="exams">Екзамени</string>
+    <string name="new_exam">Новий екзамен</string>
+    <string name="edit_exam">Редагувати екзамен</string>
+    <string name="delete_subject">Видалити предмет?</string>
+    <string name="sure_to_delete_subject">Ви впевнені, що хочете видалити цей предмет?\nБудуть видалені також усі заняття з цього предмету</string>
+    <string name="exam_time">Час екзамену</string>
+    <string name="exam_date">Дата екзамену</string>
+    <string name="pick_date">Обрати дату</string>
 </resources>

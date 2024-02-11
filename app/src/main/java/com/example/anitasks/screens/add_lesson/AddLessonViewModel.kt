@@ -9,7 +9,7 @@ import com.example.anitasks.core.data.model.DayOfWeek
 import com.example.anitasks.core.data.model.Lesson
 import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.Subject
-import com.example.anitasks.core.features.lessons.repository.LessonRepository
+import com.example.anitasks.features.lessons.repository.LessonRepository
 import com.example.anitasks.screens.add_lesson.model.AddLessonArgs
 import com.example.anitasks.screens.add_lesson.model.AddLessonUiState
 import com.example.anitasks.ui.util.ActionWithData

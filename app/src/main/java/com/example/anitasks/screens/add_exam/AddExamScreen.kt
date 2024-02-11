@@ -1,5 +1,6 @@
-package com.example.anitasks.screens.add_lesson
+package com.example.anitasks.screens.add_exam
 
+import android.widget.Toast
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
@@ -21,13 +22,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.anitasks.R
-import com.example.anitasks.core.data.model.Lesson
+import com.example.anitasks.core.data.model.Exam
 import com.example.anitasks.core.data.model.Subject
-import com.example.anitasks.screens.add_lesson.components.LessonTypes
-import com.example.anitasks.screens.add_lesson.components.NumberOfWeek
-import com.example.anitasks.screens.add_lesson.model.AddLessonArgs
 import com.example.anitasks.screens.destinations.SubjectListScreenDestination
 import com.example.anitasks.ui.components.AddItemSection
+import com.example.anitasks.ui.components.DatePickerDialog
+import com.example.anitasks.ui.components.DeleteItemDialog
 import com.example.anitasks.ui.components.SaveDeleteButtons
 import com.example.anitasks.ui.components.TextFieldWithIcon
 import com.example.anitasks.ui.components.TimePickerDialog
@@ -39,20 +39,22 @@ import com.ramcosta.composedestinations.result.NavResult
 import com.ramcosta.composedestinations.result.ResultRecipient
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 
+
 @Destination
 @Composable
-fun AddLessonScreen(
+fun AddExamScreen(
     navigator: DestinationsNavigator,
     resultSubjectRecipient: ResultRecipient<SubjectListScreenDestination, Subject?>,
-    viewModel: AddLessonViewModel = hiltViewModel(),
-    lesson: Lesson? = null,
-    addLessonArgs: AddLessonArgs? = null
+    viewModel: AddExamViewModel = hiltViewModel(),
+    exam: Exam? = null
 ) {
     val state = viewModel.uiState.collectAsState().value
     val actionResult = viewModel.actionResult.collectAsState().value
 
     val context = LocalContext.current
     val timeDialogState = rememberMaterialDialogState()
+    val dateDialogState = rememberMaterialDialogState()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -64,21 +66,20 @@ fun AddLessonScreen(
             }
         }
     }
-    LaunchedEffect(key1 = lesson) {
-        viewModel.initLesson(lesson)
-    }
 
-    LaunchedEffect(key1 = addLessonArgs) {
-        viewModel.initLessonWithArgs(addLessonArgs)
+    LaunchedEffect(key1 = exam) {
+        viewModel.initExam(exam)
     }
-
 
     LaunchedEffect(key1 = actionResult) {
+        if (actionResult.success == true) {
+            //global toast
+            Toast.makeText(context, actionResult.info, Toast.LENGTH_SHORT).show()
+            navigator.navigateUp()
+        }
+
         if (!actionResult.info.isNullOrEmpty()) {
             viewModel.actionResult.value.info?.let { snackbarHostState.showSnackbar(it) }
-        }
-        if (actionResult.success == true && actionResult.data == "edit") {
-            navigator.navigateUp()
         }
     }
 
@@ -88,11 +89,9 @@ fun AddLessonScreen(
         },
         topBar = {
             TopAppBar(
-                label = if (lesson == null) stringResource(R.string.new_lesson) else stringResource(
-                    R.string.editLesson
-                ),
+                label = if (exam == null) stringResource(R.string.new_exam) else stringResource(R.string.edit_exam),
                 navigator = navigator,
-                backButtonAvailable = lesson != null || addLessonArgs != null
+                backButtonAvailable = true
             )
         },
         containerColor = Background
@@ -121,23 +120,18 @@ fun AddLessonScreen(
                 onValueChange = viewModel::onLocationChanged
             )
             Spacer(modifier = Modifier.height(16.dp))
-            LessonTypes(
-                selectedLessonType = state.lessonType,
-                onSelect = viewModel::selectLessonType
-            )
-            Spacer(modifier = Modifier.height(16.dp))
             AddItemSection(
-                title = stringResource(R.string.day_of_week),
-                value = state.dayOfWeek?.displayName,
-                hint = stringResource(R.string.pick_day),
-                iconId = R.drawable.ic_pick_day,
+                title = stringResource(R.string.exam_date),
+                value = if (state.date != null) state.date.toString() else null,
+                hint = stringResource(R.string.pick_date),
+                iconId = R.drawable.ic_pick_date,
                 onClick = {
-                    viewModel.showDayOfWeekDialog(context = context)
+                    dateDialogState.show()
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
             AddItemSection(
-                title = stringResource(R.string.lesson_start_time),
+                title = stringResource(R.string.exam_time),
                 value = state.startTime,
                 hint = stringResource(R.string.pick_time),
                 iconId = R.drawable.ic_pick_time,
@@ -145,15 +139,13 @@ fun AddLessonScreen(
                     timeDialogState.show()
                 }
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            NumberOfWeek(selectedWeek = state.week, onSelect = viewModel::selectWeek)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(28.dp))
             SaveDeleteButtons(onDeleteClick = {
                 keyboardController?.hide()
-                viewModel.onDeleteClick(context)
+                viewModel.onDeleteClick()
             }, onSaveClick = {
                 keyboardController?.hide()
-                viewModel.saveLesson()
+                viewModel.saveExam()
             })
         }
     }
@@ -163,4 +155,21 @@ fun AddLessonScreen(
         startTime = state.startTime,
         onSelectTime = viewModel::selectStartTime
     )
+    DatePickerDialog(
+        dateDialogState = dateDialogState,
+        date = state.date,
+        onSelectDate = viewModel::selectDate
+    )
+
+    if (state.showDeleteDialog) {
+        DeleteItemDialog(
+            title = "Видалити екзамен?",
+            subTitle = "Аніта попереджає, пілся видалення екзамен не буде враховуватись у статистику",
+            onDeleteClick = {
+                viewModel.deleteExam()
+            }, onDismissClick = {
+                viewModel.dismissDeleteDialog()
+            }
+        )
+    }
 }

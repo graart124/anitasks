@@ -1,4 +1,4 @@
-package com.example.anitasks.screens.add_lesson.components
+package com.example.anitasks.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
@@ -29,7 +29,7 @@ import com.example.anitasks.ui.theme.UnselectedNavBarItemColor
 
 
 @Composable
-fun AddLessonItem(
+fun AddItemSection(
     title: String,
     value: String?,
     hint: String,

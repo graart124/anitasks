@@ -1,11 +1,9 @@
 package com.example.anitasks.screens.add_subject
 
-import android.app.AlertDialog
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anitasks.core.data.model.Subject
-import com.example.anitasks.core.features.subjects.repository.SubjectRepository
+import com.example.anitasks.features.subjects.repository.SubjectRepository
 import com.example.anitasks.screens.add_subject.model.AddSubjectUiState
 import com.example.anitasks.ui.util.Action
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -96,11 +94,11 @@ class AddSubjectViewModel @Inject constructor(
         }
     }
 
-    fun onDeleteClick(context: Context) {
+    fun onDeleteClick() {
         if (_uiState.value.id == null) {
             clearSubjectData()
         } else {
-            showDeleteDialog(context)
+            showDeleteDialog()
         }
     }
 
@@ -108,18 +106,15 @@ class AddSubjectViewModel @Inject constructor(
         _uiState.update { AddSubjectUiState() }
     }
 
-    private fun showDeleteDialog(context: Context) {
-        AlertDialog.Builder(context)
-            .setTitle("Видалити предмет?")
-            .setMessage("Ви впевнені, що хочете видалити цей предмет?\nБудуть видалені також усі заняття з цього предмету")
-            .setPositiveButton("Видалити") { _, _ ->
-                deleteSubject()
-            }
-            .setNegativeButton("Скасувати", null)
-            .show()
+    private fun showDeleteDialog() {
+       _uiState.update { it.copy(showDeleteDialog = true) }
     }
 
-    private fun deleteSubject() {
+    fun dismissDeleteDialog() {
+        _uiState.update { it.copy(showDeleteDialog = false) }
+    }
+
+    fun deleteSubject() {
         viewModelScope.launch(
             CoroutineExceptionHandler { _, thr ->
                 thr.printStackTrace()
@@ -137,7 +132,7 @@ class AddSubjectViewModel @Inject constructor(
                     )
                 }
             } finally {
-                _uiState.update { it.copy(showProgressDialog = true) }
+                _uiState.update { it.copy(showProgressDialog = false) }
             }
         }
     }

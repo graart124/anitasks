@@ -1,4 +1,4 @@
-package com.example.anitasks.core.features.subjects.repository
+package com.example.anitasks.features.subjects.repository
 
 import com.example.anitasks.core.data.local.room.dao.SubjectDao
 import com.example.anitasks.core.data.model.Subject
@@ -7,10 +7,6 @@ class SubjectRepository(private val dao: SubjectDao) {
 
     suspend fun getAllSubjects(): List<Subject> {
         return dao.getAllSubjects()
-    }
-
-    suspend fun getSubjectById(subjectId: Long): Subject? {
-        return dao.getSubjectById(subjectId)
     }
 
     suspend fun createSubject(name: String, teacherName: String?) {

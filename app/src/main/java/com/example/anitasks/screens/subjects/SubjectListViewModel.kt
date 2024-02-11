@@ -1,11 +1,9 @@
 package com.example.anitasks.screens.subjects
 
-import android.app.AlertDialog
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anitasks.core.data.model.Subject
-import com.example.anitasks.core.features.subjects.repository.SubjectRepository
+import com.example.anitasks.features.subjects.repository.SubjectRepository
 import com.example.anitasks.screens.subjects.model.SubjectListUiState
 import com.example.anitasks.ui.util.Action
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,18 +55,7 @@ class SubjectListViewModel @Inject constructor(
 
     }
 
-    fun onDeleteSubject(subject: Subject, context: Context) {
-        AlertDialog.Builder(context)
-            .setTitle("Видалити предмет?")
-            .setMessage("Ви впевнені, що хочете видалити цей предмет?\nБудуть видалені також усі заняття з цього предмету")
-            .setPositiveButton("Видалити") { _, _ ->
-                deleteSubject(subject)
-            }
-            .setNegativeButton("Скасувати", null)
-            .show()
-    }
-
-    private fun deleteSubject(subject: Subject) {
+    fun deleteSubject(subject: Subject) {
         viewModelScope.launch(
             CoroutineExceptionHandler { _, thr ->
                 thr.printStackTrace()
