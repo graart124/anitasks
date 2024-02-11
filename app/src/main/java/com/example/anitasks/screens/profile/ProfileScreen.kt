@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import com.example.anitasks.R
 import com.example.anitasks.core.util.OnLifecycleEvent
+import com.example.anitasks.screens.profile.components.ExamsInfoSection
 import com.example.anitasks.screens.profile.components.LessonInfoSection
 import com.example.anitasks.screens.profile.components.UserInfoSection
 import com.example.anitasks.ui.components.TopAppBar
@@ -56,6 +57,10 @@ fun ProfileScreen(
                     selectedLessonType = state.selectedLessonType,
                     onLessonTypeClick = viewModel::onLessonTypeClick
                 )
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+            if (state.exams.isNotEmpty()) {
+                ExamsInfoSection(exams = state.exams)
             }
         }
     }

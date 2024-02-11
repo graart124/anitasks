@@ -20,7 +20,7 @@ import com.example.anitasks.R
 import com.example.anitasks.core.data.model.Lesson
 import com.example.anitasks.core.util.OnLifecycleEvent
 import com.example.anitasks.screens.destinations.AddLessonScreenDestination
-import com.example.anitasks.screens.schedule.components.CalendarView
+import com.example.anitasks.screens.schedule.components.calendar.CalendarView
 import com.example.anitasks.screens.schedule.components.LessonCardDialog
 import com.example.anitasks.screens.schedule.components.WeekSection
 import com.example.anitasks.ui.components.ProgressDialog

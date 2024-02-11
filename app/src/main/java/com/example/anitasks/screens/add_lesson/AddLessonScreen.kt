@@ -77,7 +77,7 @@ fun AddLessonScreen(
         if (!actionResult.info.isNullOrEmpty()) {
             viewModel.actionResult.value.info?.let { snackbarHostState.showSnackbar(it) }
         }
-        if (actionResult.success == true && actionResult.data == "edit") {
+        if (actionResult.success == true && (actionResult.data == "edit"|| actionResult.data == "delete")) {
             navigator.navigateUp()
         }
     }
