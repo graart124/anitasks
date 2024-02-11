@@ -19,10 +19,11 @@ import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.core.data.model.LessonType.LECTURE
 import com.example.anitasks.core.data.model.LessonType.PRACTICAL
 import com.example.anitasks.core.data.model.LessonType.SEMINAR
-import com.example.anitasks.ui.theme.Background
 import com.example.anitasks.ui.theme.LectureColor
 import com.example.anitasks.ui.theme.PracticalColor
+import com.example.anitasks.ui.theme.PurpleDark
 import com.example.anitasks.ui.theme.SeminarColor
+import com.example.anitasks.ui.theme.getColor
 
 @Composable
 fun LessonPieChart(lessons: List<Lesson>, selectedLessonType: LessonType?) {
@@ -39,7 +40,9 @@ fun LessonPieChart(lessons: List<Lesson>, selectedLessonType: LessonType?) {
         null -> ""
     }
 
-    Canvas(modifier = Modifier.size(180.dp)) {
+    val textColor = selectedLessonType?.getColor()?:Color.White
+
+    Canvas(modifier = Modifier.size(150.dp)) {
         val radius = size.minDimension / 2
 
         val startAngle = 0f
@@ -75,7 +78,7 @@ fun LessonPieChart(lessons: List<Lesson>, selectedLessonType: LessonType?) {
         )
 
         drawCircle(
-            color = Background,
+            color = PurpleDark,
             radius = radius - 10.dp.toPx(),
             center = Offset(radius, radius)
         )
@@ -83,7 +86,7 @@ fun LessonPieChart(lessons: List<Lesson>, selectedLessonType: LessonType?) {
 
         drawIntoCanvas { canvas ->
             val textPaint = Paint().asFrameworkPaint().apply {
-                color = Color.White.toArgb()
+                color = textColor.toArgb()
                 textSize = 24.sp.toPx()
             }
             val textBounds = Rect()

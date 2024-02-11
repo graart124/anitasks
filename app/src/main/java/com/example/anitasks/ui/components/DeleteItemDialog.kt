@@ -85,7 +85,10 @@ fun DeleteItemDialog(
                     Spacer(modifier = Modifier.width(17.dp))
                     TextButton(
                         modifier = Modifier.weight(1f),
-                        onClick = onDeleteClick,
+                        onClick = {
+                            onDeleteClick()
+                            onDismissClick()
+                        },
                         contentPadding = PaddingValues(vertical = 14.dp),
 
                         ) {

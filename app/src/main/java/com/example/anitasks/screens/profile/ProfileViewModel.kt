@@ -2,6 +2,7 @@ package com.example.anitasks.screens.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.anitasks.core.data.model.LessonType
 import com.example.anitasks.features.lessons.repository.LessonRepository
 import com.example.anitasks.features.user.repository.UserRepository
 import com.example.anitasks.screens.profile.model.ProfileUiState
@@ -47,6 +48,10 @@ class ProfileViewModel @Inject constructor(
 //                    _actionResult.update { it.copy(success = false, info = "Виникла помилка: $e") }
             }
         }
+    }
+
+    fun onLessonTypeClick(lessonType: LessonType) {
+        _uiState.update { it.copy(selectedLessonType = lessonType) }
     }
 
 }
